@@ -1,4 +1,5 @@
 class Solution {
+    // Maaz Zaki
     public int numOfStrings(String[] patterns, String word) {
         int ans=0;
         for(String s:patterns){
