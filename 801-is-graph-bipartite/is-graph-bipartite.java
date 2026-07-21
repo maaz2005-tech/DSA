@@ -1,19 +1,22 @@
 class Solution {
-    boolean dfs(int graph[][],int u,int col[],int color){
-        col[u]=1-color;
-        for(int v:graph[u]){
-            if(col[v]==col[u]) return false;
-            else if(col[v]==-1 && !dfs(graph,v,col,1-color)) return false;
-        }
-        return true;
-    }
     public boolean isBipartite(int[][] graph) {
-        int n=graph.length;
-        int col[]=new int[n];
-        Arrays.fill(col,-1);
-        for(int i=0;i<n;i++){
-            if(col[i]==-1){
-                if(!dfs(graph,i,col,1)) return false;
+        //bfs
+        Queue<int[]> q=new LinkedList<>();
+        int col[]=new int[graph.length];
+        for(int i=0;i<graph.length;i++){
+            if(col[i]!=0) continue;
+            q.add(new int[]{i,0});
+            while(!q.isEmpty()){
+                int curr[]=q.remove();
+                int u=curr[0];
+                int color=curr[1];
+                col[u]=color;
+                for(int v:graph[u]){
+                    if(col[v]==0){
+                        q.add(new int[]{v,3-color});
+                    }
+                    else if(col[u]==col[v]) return false;
+                }
             }
         }
         return true;
