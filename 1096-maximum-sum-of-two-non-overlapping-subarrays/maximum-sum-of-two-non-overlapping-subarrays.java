@@ -1,29 +1,24 @@
 class Solution {
-    public int maxSumTwoNoOverlap(int[] nums, int l, int m) {
+    int solve(int pref[],int L,int M){
+        int res=0;
+        int n=pref.length;
+        int maxLeftSubSum=0;
+        for(int mEnd=L+M;mEnd<n;mEnd++){
+            int lEnd=mEnd-M;
+            int lStart=lEnd-L;
+            int left=pref[lEnd]-pref[lStart];
+            maxLeftSubSum=Math.max(maxLeftSubSum,left);
+            int right=pref[mEnd]-pref[mEnd-M];
+            res=Math.max(maxLeftSubSum+right,res);
+        }
+        return res;
+    }
+    public int maxSumTwoNoOverlap(int[] nums, int firstLen, int secondLen) {
         int n=nums.length;
         int pref[]=new int[n+1];
         for(int i=1;i<=n;i++){
             pref[i]=pref[i-1]+nums[i-1];
         }
-        int max=0;
-        for(int i=0;i<=(n-l-m+1);i++){
-            int currMax=0;
-            int first=pref[i+l]-pref[i];
-            for(int j=i+l+m;j<=n;j++){
-                int second=pref[j]-pref[j-m];
-                currMax=Math.max(first+second,currMax);
-            }
-            max=Math.max(max,currMax);
-        }
-        for(int i=0;i<=(n-l-m+1);i++){
-            int currMax=0;
-            int first=pref[i+m]-pref[i];
-            for(int j=i+l+m;j<=n;j++){
-                int second=pref[j]-pref[j-l];
-                currMax=Math.max(first+second,currMax);
-            }
-            max=Math.max(max,currMax);
-        }
-        return max;
+        return Math.max(solve(pref,firstLen,secondLen),solve(pref,secondLen,firstLen));
     }
 }
