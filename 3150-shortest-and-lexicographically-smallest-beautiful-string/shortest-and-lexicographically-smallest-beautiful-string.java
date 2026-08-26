@@ -1,4 +1,7 @@
 class Solution {
+
+    // maaz2005-tech (GitHub)
+
     boolean check(String s,int sl,int l,int n){
         while(l<n && sl<n){
             if(s.charAt(l)==s.charAt(sl)){
@@ -34,7 +37,6 @@ class Solution {
                 
             }
         }
-        if(sl==-1) return "";
-        return s.substring(sl,sr+1);
+        return (sl==-1)?"":s.substring(sl,sr+1);
     }
 }
