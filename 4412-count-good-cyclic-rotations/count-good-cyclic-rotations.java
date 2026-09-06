@@ -13,21 +13,10 @@ class Solution {
         int r=n/2; // s1+=
 
         int ans=0;
-        // n/2 times
-        while(r<n){
-            int x=nums[l++]; // s2+=
-            int y=nums[r++]; // s1+=
-            
-            s1-=x;
-            s1+=y;
-            s2-=y;
-            s2+=x;
-            if(s1>s2) ans++;
-        }
-        r=0;
         while(l<n){
             int x=nums[l++]; // s2+=
-            int y=nums[r++]; // s1+=
+            int y=nums[r]; // s1+=
+            r=(r+1)%n;
             s1-=x;
             s1+=y;
             s2-=y;
