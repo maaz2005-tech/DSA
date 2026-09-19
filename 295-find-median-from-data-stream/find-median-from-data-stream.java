@@ -8,19 +8,18 @@ class MedianFinder {
     
     public void addNum(int num) {
         left.add(num);
-        right.add(left.poll());
-        while(right.size()>left.size()){
-            left.add(right.poll());
+        right.add(left.remove());
+        while(left.size()<right.size()){
+            left.add(right.remove());
         }
     }
     
     public double findMedian() {
-        if(left.size()>right.size()){
-            return (double)left.peek();
+        if(left.size()==right.size()){
+            double x=left.peek()+right.peek();
+            return x/2;
         }
-        else{
-            return (left.peek()+(double)right.peek())/2;
-        }
+        return (double)left.peek();
     }
 }
 
