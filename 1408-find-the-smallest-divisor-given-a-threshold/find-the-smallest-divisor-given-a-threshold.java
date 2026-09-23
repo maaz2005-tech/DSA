@@ -2,7 +2,8 @@ class Solution {
     int result(int nums[],int d){
         int sum=0;
         for(int x:nums){
-            sum+=(Math.ceil((double)x/d));
+            // sum+=(Math.ceil((double)x/d));
+            sum+=(x + d - 1) / d;
         }
         return sum;
     }
