@@ -1,23 +1,24 @@
 class Solution {
     public int minOperations(int[] nums, int x) {
         int n=nums.length;
-        Map<Integer,Integer> pref=new HashMap<>();
         int sum=0;
-        int ans=Integer.MAX_VALUE;
-        for(int i=0;i<n;i++){
-            sum+=nums[i];
-            if(sum==x) ans=Math.min(ans,i+1);
-            pref.put(sum,i);
-        }
+        for(int num:nums) sum+=num;
+        int sumToBeChecked=sum-x;
+        if(sumToBeChecked<0) return -1;
+        if(sumToBeChecked==0) return n;
+        int l=0;
+
         sum=0;
-        for(int i=n-1;i>=0;i--){
-            sum+=nums[i];
-            if(sum==x) ans=Math.min(ans,n-i);
-            int rem=x-sum;
-            if(pref.containsKey(rem) && pref.get(rem)<i){
-                ans= Math.min(ans,n-i+pref.get(rem)+1);
+        int ans=0;
+        for(int r=0;r<n;r++){
+            sum+=nums[r];
+            while(l<r && sum>sumToBeChecked){
+                sum-=nums[l++];
+            }
+            if(sum==sumToBeChecked){
+                ans=Math.max(r-l+1,ans);
             }
         }
-        return ans==Integer.MAX_VALUE?-1:ans;
+        return ans==0?-1:n-ans;
     }
 }
