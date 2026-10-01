@@ -42,7 +42,7 @@ class Solution {
 
         for(int i=n-1;i>=0;i--){
             for(int j=0;j<m;j++){
-                for(int k=m-1;k>=0;k--){
+                for(int k=0;k<m;k++){
                     int ans=0;
                     for(int val1=-1;val1<=1;val1++){
                         for(int val2=-1;val2<=1;val2++){
