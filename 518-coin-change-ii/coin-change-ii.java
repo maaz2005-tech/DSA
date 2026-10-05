@@ -1,17 +1,15 @@
 class Solution {
-    int solve(int coins[],int i,int amount){
-        if(amount==0) return 1;
-        if(i<0) return 0;
-        if(dp[i][amount]!=null) return dp[i][amount];
-        int ans=0;
-        ans+=solve(coins,i-1,amount);
-        if(amount>=coins[i]) ans+=solve(coins,i,amount-coins[i]);
-        return dp[i][amount]=ans;
-    }
-    Integer dp[][];
     public int change(int amount, int[] coins) {
-        Arrays.sort(coins);
-        this.dp=new Integer[coins.length][amount+1];
-        return solve(coins,coins.length-1,amount);
+        int n=coins.length;
+        int dp[][]=new int[n+1][amount+1];
+        for(int i=0;i<=n ;i++) dp[i][0]=1;
+        for(int i=1;i<=n;i++){
+            int x=coins[i-1];
+            for(int j=1;j<=amount;j++){
+                dp[i][j]=dp[i-1][j];
+                if(j>=x) dp[i][j]+=dp[i][j-x];
+            }
+        }
+        return dp[n][amount];
     }
 }
