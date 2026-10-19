@@ -1,47 +1,36 @@
 class Solution {
-    void createGraph(int edges[][],List<Integer> graph[],int deg[]){
-        for(int i=0;i<graph.length;i++){
-            graph[i]=new ArrayList<>();
-        }
-        for(int e[]:edges){
-            deg[e[0]]++;
-            deg[e[1]]++;
-            graph[e[0]].add(e[1]);
-            graph[e[1]].add(e[0]);
-        }
+    int getColor(char c){
+        if(c=='R') return 0;
+        if(c=='B') return 1;
+        return 2;
     }
-    boolean bfs(List<Integer> graph[],String colors,int root){
-        Queue<Integer> q=new LinkedList<>();
-        q.add(root);
-        boolean vis[]=new boolean[graph.length];
-        while(!q.isEmpty()){
-            int curr=q.remove();
-            vis[curr]=true;
-            for(int v:graph[curr]){
-                if(vis[v]) continue;
-                if(colors.charAt(curr)=='R' && colors.charAt(v)!='B'){
-                    return false;
-                }
-                if(colors.charAt(curr)=='B' && colors.charAt(v)!='W'){
-                    return false;
-                }
-                if(colors.charAt(curr)=='W' && colors.charAt(v)!='R'){
-                    return false;
-                }
-                q.add(v);
-            }
-        }
-        return true;
-    }
+
     public int findColoredRoot(int[][] edges, String colors) {
         int n=colors.length();
-        List<Integer> graph[]=new ArrayList[n];
+        int indeg[]=new int[n];
         int deg[]=new int[n];
-        createGraph(edges,graph,deg);
-        for(int i=0;i<n;i++){
-            if(deg[i]<3 && bfs(graph,colors,i)) return i;
+        for(int e[]:edges){
+            int colU=getColor(colors.charAt(e[0]));
+            int colV=getColor(colors.charAt(e[1]));
+            deg[e[0]]++;deg[e[1]]++;
+            if(colU==colV) return -1;
+            if((colU+1)%3==colV){
+                indeg[e[1]]++;
+            }
+            else{
+                indeg[e[0]]++;
+            }
         }
-
-        return -1;
+        int root=-1;
+        for(int i=0;i<n;i++){
+            if(indeg[i]==0){
+                if(root!=-1){
+                    return -1;
+                }
+                root=i;
+            }
+        }
+        
+        return (root!=-1 && deg[root]<3)?root:-1;
     }
 }
