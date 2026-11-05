@@ -44,7 +44,8 @@ class Solution {
                     for(char ch='a';ch<='z';ch++){
                         sb.setCharAt(i,ch);
                         String temp=sb.toString();
-                        if(vis.containsKey(temp) && !vis.get(temp)){
+                        Boolean flag=vis.get(temp);
+                        if(flag!=null && !flag){
                             q.add(temp);
                             vis.put(temp,true);
                         }
