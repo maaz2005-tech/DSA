@@ -5,8 +5,10 @@ class Solution {
         int C[]=new int[m];
         for(int i=0;i<n;i++){
             for(int j=0;j<m;j++){
-                C[j]+=grid[i][j];
-                R[i]+=grid[i][j];
+                if(grid[i][j]==1){
+                    C[j]++;
+                    R[i]++;
+                }
             }
         }
         int ans=0;
