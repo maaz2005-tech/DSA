@@ -24,7 +24,7 @@ class Solution {
                 max=Math.max(max,freq.get(sid));
                 continue;
             }
-            Integer next=avail.higher(sid);
+            Integer next=avail.ceiling(sid);
             if(next==null){
                 next=avail.first();
             }
