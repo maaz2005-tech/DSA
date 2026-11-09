@@ -1,7 +1,7 @@
 class Solution {
     public List<Integer> busiestServers(int k, int[] arrival, int[] load) {
         PriorityQueue<int[]> busy=new PriorityQueue<>((a,b)->{ // {time,server_id}
-            if(a[0]==b[0]) return a[1]-b[1];
+            // if(a[0]==b[0]) return a[1]-b[1];
             return a[0]-b[0];
         });
         TreeSet<Integer> avail=new TreeSet<>();
