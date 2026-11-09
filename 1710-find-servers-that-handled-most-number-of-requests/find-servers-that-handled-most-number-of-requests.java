@@ -5,7 +5,8 @@ class Solution {
             return a[0]-b[0];
         });
         TreeSet<Integer> avail=new TreeSet<>();
-        Map<Integer,Integer> freq=new HashMap<>();
+        // Map<Integer,Integer> freq=new HashMap<>();
+        int freq[]=new int[k];
         for(int i=0;i<k;i++) avail.add(i);
         int n=load.length;
         int max=0;
@@ -20,8 +21,9 @@ class Solution {
             if(avail.contains(sid)){
                 avail.remove(sid);
                 busy.add(new int[]{arrival[i]+load[i],sid});
-                freq.put(sid,freq.getOrDefault(sid,0)+1);
-                max=Math.max(max,freq.get(sid));
+                // freq.put(sid,freq.getOrDefault(sid,0)+1);
+                freq[sid]++;
+                max=Math.max(max,freq[sid]);
                 continue;
             }
             Integer next=avail.ceiling(sid);
@@ -30,12 +32,13 @@ class Solution {
             }
             avail.remove(next);
             busy.add(new int[]{arrival[i]+load[i],next});
-            freq.put(next,freq.getOrDefault(next,0)+1);
-            max=Math.max(max,freq.get(next));
+            // freq.put(next,freq.getOrDefault(next,0)+1);
+            freq[next]++;
+            max=Math.max(max,freq[next]);
         }
         List<Integer> res=new ArrayList<>();
-        for(int x:freq.keySet()){
-            if(freq.get(x)==max) res.add(x);
+        for(int x=0;x<k;x++){
+            if(freq[x]==max) res.add(x);
             // System.out.println(x+"->"+freq.get(x));
         }
         return res;
