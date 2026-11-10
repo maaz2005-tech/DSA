@@ -1,13 +1,12 @@
 class Solution {
     public int climbStairs(int n, int[] costs) {
-        int dp[]=new int[n+1];
+        int first =0 , second =0 , third=0;
         for(int i=1;i<=n;i++){
-            int ans=Integer.MAX_VALUE;
-            for(int j=i-1;j>=0 && (i-j)<=3;j--){
-                ans=Math.min(ans,(i-j)*(i-j)+dp[j]);
-            }
-            dp[i]=ans+costs[i-1];
+            int ans=Math.min(first+9,Math.min(second+4,third+1))+costs[i-1];
+            first=second;
+            second=third;
+            third=ans;
         }
-        return dp[n];
+        return third;
     }
 }
