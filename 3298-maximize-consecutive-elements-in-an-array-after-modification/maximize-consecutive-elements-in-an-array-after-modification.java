@@ -30,10 +30,20 @@ class Solution {
     public int maxSelectedElements(int[] nums) {
         Arrays.sort(nums);
         this.dp=new int[nums.length][2];
-        for(int i[]:dp) Arrays.fill(i,-1);
+        // for(int i[]:dp) Arrays.fill(i,-1);
         int res=1;
-        for(int i=0;i<nums.length;i++){
-            res=Math.max(Math.max(res,solve(nums,i,0)),solve(nums,i,1));
+        for(int i=nums.length-1;i>=0;i--){
+            for(int inc=0;inc<=1;inc++){
+                int currVal=nums[i]+inc;
+                int len=0;
+                int j=findIdx(nums,i+1,currVal+1);
+                if(j!=-1) len=Math.max(len,dp[j][0]);
+                j=findIdx(nums,i+1,currVal);
+                if(j!=-1) len=Math.max(len,dp[j][1]);
+                dp[i][inc]=len+1;
+            }
+            res=Math.max(Math.max(res,dp[i][0]),dp[i][1]);
+            // System.out.println(res);
         }
         return res;
     }
