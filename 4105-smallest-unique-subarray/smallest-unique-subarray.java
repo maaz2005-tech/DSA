@@ -13,16 +13,26 @@ class Solution {
             Map<Long,Integer> map=new HashMap<>();
             Long hash=0L;
             long power=1;
-            for(int p=1;p<len;p++){
-                power=(power*BASE)%MOD;
-            }
+            // for(int p=1;p<len;p++){
+            //     power=(power*BASE)%MOD;
+            // }
+            // for(int i=0;i<len;i++){
+            //     hash=(hash*BASE + nums[i])%MOD;
+            // }
+            // map.put(hash,1);
+            // for(int i=len;i<n;i++){
+            //     hash =(hash - nums[i-len] * power % MOD + MOD) % MOD;
+            //     hash =(hash * BASE + nums[i]) % MOD;
+            //     map.put(hash,map.getOrDefault(hash,0)+1);
+            // }
             for(int i=0;i<len;i++){
-                hash=(hash*BASE + nums[i])%MOD;
+                if(i>=1) power=(power*BASE)%MOD;
+                hash=(hash*BASE +nums[i])%MOD;
             }
             map.put(hash,1);
             for(int i=len;i<n;i++){
-                hash =(hash - nums[i-len] * power % MOD + MOD) % MOD;
-                hash =(hash * BASE + nums[i]) % MOD;
+                hash=(hash-(nums[i-len]*power)%MOD +MOD)%MOD;
+                hash=(hash*BASE +nums[i])%MOD;
                 map.put(hash,map.getOrDefault(hash,0)+1);
             }
             boolean unique=false;
