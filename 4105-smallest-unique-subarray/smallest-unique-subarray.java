@@ -8,13 +8,11 @@ class Solution {
         // m-> size of window
         int n=nums.length,BASE=52;
         int l=1,r=n;
-        int ans=n;
         while(l<=r){
             int len=l+(r-l)/2;
             Map<Long,Integer> map=new HashMap<>();
             Long hash=0L;
             long power=1;
-            // System.out.println(len+"....");
             for(int p=1;p<len;p++){
                 power=(power*BASE)%MOD;
             }
@@ -22,11 +20,9 @@ class Solution {
                 hash=(hash*BASE + nums[i])%MOD;
             }
             map.put(hash,1);
-            // System.out.println(hash);
             for(int i=len;i<n;i++){
                 hash =(hash - nums[i-len] * power % MOD + MOD) % MOD;
                 hash =(hash * BASE + nums[i]) % MOD;
-                // System.out.println(hash);
                 map.put(hash,map.getOrDefault(hash,0)+1);
             }
             boolean unique=false;
@@ -38,12 +34,11 @@ class Solution {
             }
             if(unique){
                 r=len-1;
-                ans=len;
             }
             else{
                 l=len+1;
             }
         }
-        return ans;
+        return l;
     }
 }
